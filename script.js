@@ -46,7 +46,7 @@ function iniciarJuego() {
     btnRight.addEventListener('click', () => establecerDireccion(10, 0));
 
     if (esDispositivoMovil()) {
-        controls.style.display = 'block';
+        controls.style.display = 'flex';
     }
 
     actualizarJuego();

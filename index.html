@@ -6,15 +6,18 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <canvas id="gameCanvas" width="400" height="400"></canvas>
-    <div id="score">Puntuación: 0</div>
-    <!-- Controles para dispositivos móviles -->
-    <div id="controls">
-        <button id="left">◀️</button>
-        <button id="up">▲</button>
-        <button id="down">▼</button>
-        <button id="right">▶️</button>
+    <div class="game-container">
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
+        <div id="controls">
+            <button id="up">▲</button>
+            <div class="horizontal-buttons">
+                <button id="left">◀️</button>
+                <button id="right">▶️</button>
+            </div>
+            <button id="down">▼</button>
+        </div>
     </div>
+    <div id="score">Puntuación: 0</div>
     <script src="script.js"></script>
 </body>
 </html>

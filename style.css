@@ -3,6 +3,17 @@ body {
     font-family: Arial, sans-serif;
     background-color: #000; /* Fondo negro */
     color: #fff; /* Texto en blanco */
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #gameCanvas {
@@ -18,7 +29,9 @@ body {
 
 #controls {
     display: none; /* Oculto por defecto */
-    margin-top: 10px;
+    margin-top: 20px;
+    flex-direction: column;
+    align-items: center;
 }
 
 #controls button {
@@ -30,8 +43,50 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    width: 60px;
+    height: 60px;
 }
 
 #controls button:active {
     background-color: #ddd; /* Cambio de color al presionar */
+}
+
+.horizontal-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.horizontal-buttons button {
+    margin: 0 10px;
+}
+
+/* Diseño responsivo para dispositivos móviles */
+@media (max-width: 600px) {
+    .game-container {
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    #gameCanvas {
+        margin-right: 20px;
+    }
+
+    #controls {
+        display: flex; /* Mostrar controles en móviles */
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #controls .horizontal-buttons {
+        flex-direction: row;
+    }
+
+    #controls button {
+        width: 50px;
+        height: 50px;
+        padding: 10px;
+        font-size: 18px;
+    }
 }
