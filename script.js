@@ -10,28 +10,24 @@ const btnRight = document.getElementById('right');
 
 let velocidad = 200;
 let puntuacion = 0;
-let serpiente = [
-    { x: 200, y: 200 },
-    { x: 190, y: 200 },
-    { x: 180, y: 200 },
-    { x: 170, y: 200 },
-    { x: 160, y: 200 }
-];
-let direccion = { x: 10, y: 0 };
+let serpiente = [];
+let direccion = { x: 0, y: 0 };
 let comida = { x: 0, y: 0 };
 let segmentsToAdd = 0;
 let startTime;
 
 // Inicializar el juego
 function iniciarJuego() {
+    ajustarTamanoCanvas();
+    const tamanoInicial = canvas.width / 20;
     serpiente = [
-        { x: 200, y: 200 },
-        { x: 190, y: 200 },
-        { x: 180, y: 200 },
-        { x: 170, y: 200 },
-        { x: 160, y: 200 }
+        { x: canvas.width / 2, y: canvas.height / 2 },
+        { x: canvas.width / 2 - tamanoInicial, y: canvas.height / 2 },
+        { x: canvas.width / 2 - tamanoInicial * 2, y: canvas.height / 2 },
+        { x: canvas.width / 2 - tamanoInicial * 3, y: canvas.height / 2 },
+        { x: canvas.width / 2 - tamanoInicial * 4, y: canvas.height / 2 }
     ];
-    direccion = { x: 10, y: 0 };
+    direccion = { x: tamanoInicial, y: 0 };
     segmentsToAdd = 0;
     puntuacion = 0;
     velocidad = 200;
@@ -40,10 +36,10 @@ function iniciarJuego() {
 
     colocarComida();
     document.addEventListener('keydown', cambiarDireccion);
-    btnUp.addEventListener('click', () => establecerDireccion(0, -10));
-    btnDown.addEventListener('click', () => establecerDireccion(0, 10));
-    btnLeft.addEventListener('click', () => establecerDireccion(-10, 0));
-    btnRight.addEventListener('click', () => establecerDireccion(10, 0));
+    btnUp.addEventListener('click', () => establecerDireccion(0, -tamanoInicial));
+    btnDown.addEventListener('click', () => establecerDireccion(0, tamanoInicial));
+    btnLeft.addEventListener('click', () => establecerDireccion(-tamanoInicial, 0));
+    btnRight.addEventListener('click', () => establecerDireccion(tamanoInicial, 0));
 
     if (esDispositivoMovil()) {
         controls.style.display = 'flex';
@@ -81,10 +77,10 @@ function establecerDireccion(x, y) {
 
 // Colocar comida aleatoriamente
 function colocarComida() {
-    comida.x = Math.floor(Math.random() * (canvas.width / 10)) * 10;
-    comida.y = Math.floor(Math.random() * (canvas.height / 10)) * 10;
+    const tamanoSegmento = canvas.width / 40;
+    comida.x = Math.floor(Math.random() * (canvas.width / tamanoSegmento)) * tamanoSegmento;
+    comida.y = Math.floor(Math.random() * (canvas.height / tamanoSegmento)) * tamanoSegmento;
 
-    // Asegurar que la comida no aparezca sobre la serpiente
     const comerSerpiente = serpiente.some(segmento => segmento.x === comida.x && segmento.y === comida.y);
     if (comerSerpiente) {
         colocarComida();
@@ -111,14 +107,16 @@ function limpiarCanvas() {
 
 // Dibujar la serpiente
 function dibujarSerpiente() {
+    const tamanoSegmento = canvas.width / 40;
     ctx.fillStyle = 'green'; // Serpiente verde
     serpiente.forEach(segmento => {
-        ctx.fillRect(segmento.x, segmento.y, 10, 10);
+        ctx.fillRect(segmento.x, segmento.y, tamanoSegmento, tamanoSegmento);
     });
 }
 
 // Mover la serpiente
 function moverSerpiente() {
+    const tamanoSegmento = canvas.width / 40;
     const cabeza = { x: serpiente[0].x + direccion.x, y: serpiente[0].y + direccion.y };
     serpiente.unshift(cabeza);
 
@@ -144,8 +142,9 @@ function moverSerpiente() {
 
 // Dibujar la comida
 function dibujarComida() {
+    const tamanoComida = canvas.width / 40;
     ctx.fillStyle = 'red'; // Comida roja
-    ctx.fillRect(comida.x, comida.y, 10, 10);
+    ctx.fillRect(comida.x, comida.y, tamanoComida, tamanoComida);
 }
 
 // Comprobar colisiones
@@ -193,3 +192,17 @@ function reiniciarJuego() {
 
 // Iniciar el juego al cargar la página
 window.onload = iniciarJuego;
+
+function ajustarTamanoCanvas() {
+    const container = document.querySelector('.game-container');
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
+    const size = Math.min(containerWidth, containerHeight, 400);
+    
+    canvas.width = size;
+    canvas.height = size;
+}
+
+// Añade esto al final de la función iniciarJuego
+ajustarTamanoCanvas();
+window.addEventListener('resize', ajustarTamanoCanvas);
