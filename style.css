@@ -12,8 +12,8 @@ body {
 
 .game-container {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 #gameCanvas {
@@ -29,9 +29,9 @@ body {
 
 #controls {
     display: none; /* Oculto por defecto */
-    margin-top: 20px;
     flex-direction: column;
     align-items: center;
+    margin-left: 20px;
 }
 
 #controls button {
@@ -51,42 +51,26 @@ body {
     background-color: #ddd; /* Cambio de color al presionar */
 }
 
-.horizontal-buttons {
+.control-row {
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
-.horizontal-buttons button {
-    margin: 0 10px;
+.control-row:first-child {
+    margin-bottom: 10px;
 }
 
 /* Diseño responsivo para dispositivos móviles */
 @media (max-width: 600px) {
     .game-container {
         flex-direction: row;
-        justify-content: center;
-        align-items: flex-start;
-    }
-
-    #gameCanvas {
-        margin-right: 20px;
     }
 
     #controls {
         display: flex; /* Mostrar controles en móviles */
-        flex-direction: column;
-        align-items: center;
     }
 
-    #controls .horizontal-buttons {
-        flex-direction: row;
-    }
-
-    #controls button {
-        width: 50px;
-        height: 50px;
-        padding: 10px;
-        font-size: 18px;
+    #gameCanvas {
+        margin-right: 20px;
     }
 }
